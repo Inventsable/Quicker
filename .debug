@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionList>
+    <Extension Id="com.quicker.panel">
+        <HostList>
+            <Host Name="ILST" Port="2246" />
+        </HostList>
+    </Extension>
+    <Extension Id="com.quicker.modal">
+        <HostList>
+            <Host Name="ILST" Port="2247" />
+        </HostList>
+    </Extension>
+</ExtensionList>
