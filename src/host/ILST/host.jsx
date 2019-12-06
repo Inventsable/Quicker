@@ -5,9 +5,10 @@ function getColors() {
         bg: app.activeDocument.defaultFillColor
     });
 }
-function placeImage(path) {
+function placeImage(path, name) {
     var file = new File(path);
     var imagePlace = app.activeDocument.activeLayer.placedItems.add();
     imagePlace.file = file;
-    console.log(path);
+    console.log(name);
+    imagePlace.name = name;
 }

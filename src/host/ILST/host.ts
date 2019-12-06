@@ -7,9 +7,10 @@ function getColors() {
   });
 }
 
-function placeImage(path) {
+function placeImage(path, name) {
   let file = new File(path);
   let imagePlace = app.activeDocument.activeLayer.placedItems.add();
   imagePlace.file = file;
-  console.log(path);
+  console.log(name);
+  imagePlace.name = name;
 }

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ExtensionManifest ExtensionBundleId="com.quicker" ExtensionBundleVersion="1.0.0" ExtensionBundleName="quicker" Version="8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ExtensionManifest ExtensionBundleId="com.quicker" ExtensionBundleVersion="1.0.1" ExtensionBundleName="quicker" Version="8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ExtensionList>
-    <Extension Id="com.quicker.panel" Version="1.0.0" />
-    <Extension Id="com.quicker.modal" Version="1.0.0" />
+    <Extension Id="com.quicker.panel" Version="1.0.1" />
+    <Extension Id="com.quicker.modal" Version="1.0.1" />
   </ExtensionList>
   <ExecutionEnvironment>
     <HostList><Host Name="ILST" Version="[23,99.9]" /></HostList>
@@ -17,8 +17,8 @@
     <Extension Id="com.quicker.panel">
       <DispatchInfo>
         <Resources>
-          <MainPath>./src/index-dev.html</MainPath>
-          <!-- <MainPath>./dist/spa/index.html</MainPath> -->
+          <MainPath>./dist/spa/index.html</MainPath>
+          <!-- <MainPath>./src/index-dev.html</MainPath> -->
           <CEFCommandLine>
             <Parameter>--enable-nodejs</Parameter>
             <Parameter>--mixed-context</Parameter>
@@ -51,8 +51,8 @@
     <Extension Id="com.quicker.modal">
       <DispatchInfo>
         <Resources>
-          <MainPath>./src/index-dev.html</MainPath>
-          <!-- <MainPath>./dist/spa/index.html</MainPath> -->
+          <MainPath>./dist/spa/index.html</MainPath>
+          <!-- <MainPath>./src/index-dev.html</MainPath> -->
           <CEFCommandLine>
             <Parameter>--enable-nodejs</Parameter>
             <Parameter>--mixed-context</Parameter>

@@ -14,8 +14,11 @@ import starlette from "starlette";
 // Dynamic identification object that reports all panel and host information:
 // https://github.com/Inventsable/CEP-Spy
 import spy from "cep-spy";
+const fs = require("fs");
 
-import { mapActions } from "vuex";
+import { evalScript } from "cluecumber";
+
+import { mapActions, mapGetters } from "vuex";
 
 import { Dialog, Loading, Notify, LoadingBar } from "quasar";
 import showErrorMessage from "src/functions/function-show-error-message.js";
@@ -47,6 +50,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters("settings", ["settings"]),
     storage() {
       return window.localStorage;
     },
@@ -102,39 +106,15 @@ export default {
     notify(text) {
       this.$q.notify(text);
     },
-    error(text) {
-      showErrorMessage(text);
-    },
-    launchModal() {
-      console.log(`${spy.extID.match(/.*\./)[0]}modal`);
-      // Dynamically open the modal at any time
-      this.csInterface.requestOpenExtension(
-        `${spy.extID.match(/.*\./)[0]}modal`,
-        ""
+    openFile() {
+      let dataURL = document.getElementById("mirror").toDataURL();
+      var buf = new Buffer(
+        dataURL.replace(/^data:image\/\w+;base64,/, ""),
+        "base64"
       );
-    },
-    async runCS(text) {
-      return new Promise((resolve, reject) => {
-        this.csInterface.evalScript(`${text}`, res => {
-          if (res) {
-            let msg = this.isJson(res) ? JSON.parse(res) : res;
-            resolve(msg);
-          } else reject("Error");
-        });
-      });
-    },
-    isJson(str) {
-      try {
-        JSON.parse(str);
-      } catch (e) {
-        return false;
-      }
-      return true;
-    },
-    dispatchEvent(name, data) {
-      var event = new CSEvent(name, "APPLICATION");
-      event.data = data;
-      this.csInterface.dispatchEvent(event);
+      let path = `${spy.path.root}/temp/real.png`;
+      fs.writeFileSync(path, buf);
+      evalScript(`placeImage('${path}', '${this.settings.text}')`);
     },
     loadScript(path) {
       // Correctly loads a script regardless of whether Animate or regular CEP app

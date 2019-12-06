@@ -3,7 +3,7 @@
     <q-header>
       <q-bar>
         <q-btn dense flat @click="getColors" :icon="`mdi-palette`">
-          <tooltipper msg="getColors from AI" />
+          <tooltipper msg="Grab" />
         </q-btn>
         <q-input
           v-model="size"
@@ -101,14 +101,7 @@ export default {
         .join("")}`;
     },
     openFile() {
-      let dataURL = document.getElementById("mirror").toDataURL();
-      var buf = new Buffer(
-        dataURL.replace(/^data:image\/\w+;base64,/, ""),
-        "base64"
-      );
-      let path = `${spy.path.root}/temp/${this.text.replace(/\s/gm, "-")}.png`;
-      fs.writeFileSync(path, buf);
-      evalScript(`placeImage('${path}')`);
+      this.app.openFile();
     }
   }
 };

@@ -1,21 +1,12 @@
 <template>
   <div>
     <div class="qr-wrapper row q-pa-lg">
-      <!-- <vue-drag-resize
-        :isActive="true"
-        :isDraggable="false"
-        :w="size"
-        :h="size"
-        :sticks="['tl', 'tr', 'bl', 'br']"
-        :aspectRatio="true"
-      > -->
       <canvas
         v-show="text.length > 0"
         id="canvas"
         class="qrcode-image"
       ></canvas>
       <canvas v-show="false" id="mirror" class="qrcode-image"></canvas>
-      <!-- </vue-drag-resize> -->
       <div class="blank" v-show="text.length == 0"></div>
     </div>
     <q-input
@@ -36,12 +27,14 @@ import { mapGetters, mapActions } from "vuex";
 import spy from "cep-spy";
 import { evalScript } from "cluecumber";
 const fs = require("fs");
-// import VueDragResize from "vue-drag-resize";
 const QRCode = require("qrcode");
 
 export default {
   computed: {
     ...mapGetters("settings", ["settings"]),
+    app() {
+      return this.$root.$children[0];
+    },
     text: {
       get() {
         return this.settings.text;
@@ -123,14 +116,7 @@ export default {
       );
     },
     openFile() {
-      let dataURL = document.getElementById("mirror").toDataURL();
-      var buf = new Buffer(
-        dataURL.replace(/^data:image\/\w+;base64,/, ""),
-        "base64"
-      );
-      let path = `${spy.path.root}/temp/${this.text.replace(/\s/gm, "-")}.png`;
-      fs.writeFileSync(path, buf);
-      evalScript(`placeImage('${path}')`);
+      this.app.openFile();
     }
   }
 };
