@@ -1,7 +1,6 @@
 <template>
   <div id="q-app">
     <menus />
-    <loading-bar position="top" ref="loader" />
     <router-view />
   </div>
 </template>
@@ -27,7 +26,6 @@ export default {
   name: "App",
   components: {
     menus: require("src/components/dev/menus.vue").default,
-    "loading-bar": require("src/components/panel/LoadingBar").default
   },
   data: () => ({
     // required
@@ -107,14 +105,19 @@ export default {
       this.$q.notify(text);
     },
     openFile() {
-      let dataURL = document.getElementById("mirror").toDataURL();
-      var buf = new Buffer(
-        dataURL.replace(/^data:image\/\w+;base64,/, ""),
-        "base64"
-      );
-      let path = `${spy.path.root}/temp/real.png`;
-      fs.writeFileSync(path, buf);
-      evalScript(`placeImage('${path}', '${this.settings.text}')`);
+      if (!this.settings.text.length) return null;
+      if (/qr/.test(this.$route.path)) {
+        let dataURL = document.getElementById("mirror").toDataURL();
+        var buf = new Buffer(
+          dataURL.replace(/^data:image\/\w+;base64,/, ""),
+          "base64"
+        );
+        let path = `${spy.path.root}/temp/real.png`;
+        fs.writeFileSync(path, buf);
+        evalScript(`placeImage('${path}', '${this.settings.text}')`);
+      } else {
+        console.log("This is a bar code");
+      }
     },
     loadScript(path) {
       // Correctly loads a script regardless of whether Animate or regular CEP app
@@ -182,6 +185,12 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+
+@font-face {
+  font-family: "OCR";
+  src: url("./assets/fonts/OCR B MT.ttf") format("truetype");
+}
+
 :root {
   --quad: cubic-bezier(0.48, 0.04, 0.52, 0.96);
   --quart: cubic-bezier(0.76, 0, 0.24, 1);

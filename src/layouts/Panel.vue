@@ -15,9 +15,9 @@
           borderless
         />
         <q-space></q-space>
-        <q-btn dense flat @click="openFile" :icon="`mdi-send`">
-          <tooltipper msg="Send to AI" />
-        </q-btn>
+        <q-tabs v-model="activeTab" shrink stretch>
+          <q-route-tab v-for="(tab, i) in tabs" :key="i" :icon="tab.icon" :to="tab.route" />
+        </q-tabs>
       </q-bar>
     </q-header>
 
@@ -36,10 +36,23 @@ const fs = require("fs");
 export default {
   name: "MyLayout",
   components: {
-    drawer: require("components/panel/Drawer.vue").default,
     tooltipper: require("components/panel/tooltipper.vue").default
   },
-  data: () => ({}),
+  data: () => ({
+    activeTab: "tab1",
+    tabs: [
+      {
+        label: "QRCode",
+        icon: "mdi-qrcode",
+        route: "/qr"
+      },
+      {
+        label: "Barcode",
+        icon: "mdi-barcode",
+        route: "/bar"
+      }
+    ]
+  }),
   mounted() {
     console.log("Panel");
   },
@@ -111,7 +124,16 @@ export default {
 .q-layout__section--marginal {
   user-select: none;
   cursor: default;
-  background-color: var(--color-header-border);
+  background-color: var(--color-bg);
+}
+
+.q-tab {
+  min-height: 32px;
+  max-height: 32px;
+}
+
+.q-bar {
+  background: var(--color-bg);
 }
 
 @media screen and (max-width: 260px) {

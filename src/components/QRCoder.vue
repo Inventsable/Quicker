@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="qr-wrapper row q-pa-lg">
+    <div class="qr-wrapper row">
       <canvas
         v-show="text.length > 0"
         id="canvas"
@@ -9,16 +9,7 @@
       <canvas v-show="false" id="mirror" class="qrcode-image"></canvas>
       <div class="blank" v-show="text.length == 0"></div>
     </div>
-    <q-input
-      v-model="text"
-      label="Write QRCode text here"
-      class="row q-px-lg"
-      @keyup.enter="openFile"
-    >
-      <template v-if="text.length" v-slot:append>
-        <q-icon name="mdi-close" class="cursor-pointer" @click="text = ''" />
-      </template>
-    </q-input>
+    <Inputter @submitted="openFile" />
   </div>
 </template>
 
@@ -30,6 +21,9 @@ const fs = require("fs");
 const QRCode = require("qrcode");
 
 export default {
+  components: {
+    Inputter: require("./Inputter.vue").default
+  },
   computed: {
     ...mapGetters("settings", ["settings"]),
     app() {

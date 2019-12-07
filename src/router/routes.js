@@ -3,7 +3,16 @@ const routes = [
     path: "/",
     component: () => import("layouts/Panel.vue"),
     children: [
-      { path: "", name: "Home", component: () => import("pages/Index.vue") }
+      {
+        path: "qr",
+        name: "QRCode",
+        component: () => import("pages/QRCode.vue")
+      },
+      {
+        path: "bar",
+        name: "Barcode",
+        component: () => import("pages/BarCode.vue")
+      }
     ]
   }
 ];

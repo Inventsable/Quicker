@@ -1,7 +1,7 @@
 <template>
   <q-pull-to-refresh style="height: 100%;" @refresh="refresh">
-    <q-page>
-      <div class="" style="width: 100%;">
+    <q-page class="q-py-lg">
+      <div style="width: 100%;">
         <QRCoder />
       </div>
     </q-page>
